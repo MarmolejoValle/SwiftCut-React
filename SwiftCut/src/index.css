@@ -1,0 +1,24 @@
+@font-face {
+
+    font-family: DroidSnas;
+    src: url("assets/fonts/droid-sans/DroidSans.ttf");
+
+}
+:root{
+    --red-1 : #D90B1C;
+    --red-2 : #F20732;
+    --red-3 : #A62940;
+    --red-4 : #F2A7A7;
+    --white-1 : #F2F2F2;
+    --blackLigth :#35343D;
+
+}
+* {
+    font-family: "DroidSnas";
+   
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
