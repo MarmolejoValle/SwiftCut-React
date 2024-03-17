@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { SiAwsfargate } from "react-icons/si";
 import { useFormik } from "formik";
 import AuthContext from '../../config/context/auth-context';
 import * as yup from 'yup';
