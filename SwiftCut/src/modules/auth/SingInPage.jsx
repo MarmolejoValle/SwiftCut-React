@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import AuthContext from '../../config/context/auth-context';
 import * as yup from 'yup';
-import AxiosClient from "../../config/http-client/axios-client";
+import {AxiosClientJSON} from "../../config/http-client/axios-client";
 import { customAlert } from "../../config/alert/alert";
 import { Button, Label, Spinner, FloatingLabel } from 'flowbite-react';
 import barbaco from '../../assets/svg/barbecue_3x93.svg'
@@ -25,7 +25,7 @@ export const SingInPage = () => {
         }),
         onSubmit: async (values, { setSubmiting }) => {
             try {
-                const response = await AxiosClient({
+                const response = await AxiosClientJSON({
                     url: '/auth/singin',
                     method: 'POST',
                     data: values
