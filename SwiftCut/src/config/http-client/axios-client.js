@@ -1,26 +1,51 @@
 import axios from "axios";
 
 
-const SERVER_URL = import.meta.VITE_APP_SERVER_URL;
-const APP_JSON = 'aplication/JSON';
-const AxiosClient = axios.create({
-    baseURL: SERVER_URL
+const SERVER_URL = "http://localhost:8080"
+const APP_JSON = 'application/JSON';
+const MULTIPART_FORM_DATA = 'multipart/form-data';
+
+export const AxiosClientJSON = axios.create({
+    baseURL: SERVER_URL,
+    headers: {
+        'Accept': APP_JSON,
+        'Content-Type': APP_JSON
+    }
 });
 
-const requestHandlery = (req) => {
-    req.headers['Accept'] = APP_JSON;
-    req.headers['Content-Type'] = APP_JSON;
+
+// Cliente Axios para multipart/form-data
+export const AxiosClientFormData = axios.create({
+    baseURL: SERVER_URL,
+    headers: {
+        
+        'Content-Type': MULTIPART_FORM_DATA
+    }
+});
+// Interceptores para el cliente Axios JSON
+AxiosClientJSON.interceptors.request.use(
+    (req) => requestHandler(req),
+    (err) => Promise.reject(err)
+)
+
+AxiosClientJSON.interceptors.response.use(
+    (res) => Promise.resolve(res.data),
+    (err) => Promise.reject(err)
+)
+
+// Interceptores para el cliente Axios multipart/form-data
+AxiosClientFormData.interceptors.request.use(
+    (req) => requestHandler(req),
+    (err) => Promise.reject(err)
+)
+
+AxiosClientFormData.interceptors.response.use(
+    (res) => Promise.resolve(res.data),
+    (err) => Promise.reject(err)
+)
+
+const requestHandler = (req) => {
     const session = JSON.parse(localStorage.getItem('user'));
     if (session?.token) req.headers['Authorization'] = `Bearer ${session.token}`;
     return req;
 }
-
-AxiosClient.interceptors.request.use(
-    (req) => requestHandlery(req),
-    (err) => Promise.reject(err)
-)
-AxiosClient.interceptors.response.use(
-    (res) => Promise.resolve(res.data),
-    (err) => Promise.reject(err)
-)
-export default AxiosClient;
