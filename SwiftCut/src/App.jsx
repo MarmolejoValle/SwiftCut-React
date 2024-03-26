@@ -59,7 +59,7 @@ useEffect(() => {
             <Route exact path="/Graphics" element={<Graphics />} />
             <Route exact path="/Users/Profile/:idUser" element={<Profile />} />
             <Route exact path="/Extras" element={<Extras />} />
-            <Route exact path="/Extras/Info" element={<ExtraInfo />} />
+            <Route exact path="/Extras/Info/:idExtra" element={<ExtraInfo />} />
             <Route exact path="/Ordens" element={<Ordens />} />
           </Routes>
         </div>

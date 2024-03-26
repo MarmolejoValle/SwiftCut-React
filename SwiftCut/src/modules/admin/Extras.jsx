@@ -87,7 +87,7 @@ export const Extras = () =>{
                            
 
                             <Table.Cell>
-                                <Link to={"/Extras/Info"}>
+                                <Link to={`/Extras/Info/${item?.id}`}>
                                 <BiFoodMenu size={25}/>
                                  
                                 </Link>
