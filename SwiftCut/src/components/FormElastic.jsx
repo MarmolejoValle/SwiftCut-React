@@ -1,4 +1,4 @@
-import { Button, Label, Modal, Select, Spinner, TextInput } from "flowbite-react";
+import { Button, Label, Modal, Select, Spinner, TextInput, Textarea } from "flowbite-react";
 import { useContext, useEffect, useState } from "react";
 import { AxiosClientFormData, AxiosClientJSON } from "../config/http-client/axios-client";
 import { useFormik } from "formik";
@@ -80,7 +80,27 @@ export const FormElastic = ({ item }) => {
 
                             <div className="flex flex-wrap w-full">
                                 {item?.data.map((input) => {
-                                    if (input.id === "image") {
+                                    if (input.type === "textArea") {
+                                        return (
+                                            <div className="w-2/5 m-3" key={input.id}>
+                                                <div className="mb-2 block">
+                                                    <Label htmlFor={input.id} value={input.text} />
+                                                </div>
+                                                <Textarea
+
+                                                    value={formik.values[input.id]}
+                                                    onChange={formik.handleChange}
+                                                    onBlur={formik.handleBlur}
+
+                                                    id={input.id}
+                                                    placeholder={input.placeholder}
+                                                    type={input.type}
+                                                    required
+                                                />
+                                            </div>
+                                        )
+                                    }
+                                    else if (input.id === "image") {
                                         return (
                                             <div className="w-2/5 m-3" key={input.id}>
                                                 <div className="mb-2 block">

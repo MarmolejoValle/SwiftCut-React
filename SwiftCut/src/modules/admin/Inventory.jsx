@@ -1,25 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Category } from "../../components/Category";
 import { Button, Label } from "flowbite-react";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { ProductList } from "../../components/ProductList";
 import { CardProduct } from "../../components/CardProduct";
+import { FormElastic } from "../../components/FormElastic";
+import { AxiosClientFormData, AxiosClientJSON } from "../../config/http-client/axios-client";
 
 
 export const Inventory = () => {
-    const [categoryJson, setCategoryJson] = useState([
-        { name: "Primera", url: "https://images.hola.com/imagenes/cocina/recetas/20210318186295/lomo-de-cerdo-asado-al-horno/0-932-27/diapdre-home-t.jpg" },
-        { name: "Lomo", url: "https://carnesideal.tienda/cdn/shop/products/CRD05-1_6982d974-a452-4983-9c0c-350d6a3ad91b.jpg?v=1627841538" },
-        { name: "Lomo", url: "https://carnesideal.tienda/cdn/shop/products/CRD05-1_6982d974-a452-4983-9c0c-350d6a3ad91b.jpg?v=1627841538" },
-        { name: "Lomo", url: "https://carnesideal.tienda/cdn/shop/products/CRD05-1_6982d974-a452-4983-9c0c-350d6a3ad91b.jpg?v=1627841538" },
-        { name: "Lomo", url: "https://carnesideal.tienda/cdn/shop/products/CRD05-1_6982d974-a452-4983-9c0c-350d6a3ad91b.jpg?v=1627841538" },
-        { name: "Lomo", url: "https://carnesideal.tienda/cdn/shop/products/CRD05-1_6982d974-a452-4983-9c0c-350d6a3ad91b.jpg?v=1627841538" },
-        { name: "Lomo", url: "https://carnesideal.tienda/cdn/shop/products/CRD05-1_6982d974-a452-4983-9c0c-350d6a3ad91b.jpg?v=1627841538" },
-        { name: "Lomo", url: "https://carnesideal.tienda/cdn/shop/products/CRD05-1_6982d974-a452-4983-9c0c-350d6a3ad91b.jpg?v=1627841538" },
-        { name: "Lomo", url: "https://carnesideal.tienda/cdn/shop/products/CRD05-1_6982d974-a452-4983-9c0c-350d6a3ad91b.jpg?v=1627841538" },
-        { name: "Lomo", url: "https://carnesideal.tienda/cdn/shop/products/CRD05-1_6982d974-a452-4983-9c0c-350d6a3ad91b.jpg?v=1627841538" },
-        { name: "Lomo", url: "https://carnesideal.tienda/cdn/shop/products/CRD05-1_6982d974-a452-4983-9c0c-350d6a3ad91b.jpg?v=1627841538" }]);
+    const [categoryJson, setCategoryJson] = useState([]);
 
+    useEffect(() => {
+
+        const fetchData = async () => {
+            try {
+                const response = await AxiosClientJSON({
+                    url: '/api/category/readAll',
+                    method: 'GET',
+                    data: ''
+                });
+                
+                
+
+                setCategoryJson(response.data);
+               
+            } catch (error) {
+                // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+
+    }, []);
+   
     const [product, setProduct] = useState(
         {
             id:32,
@@ -55,15 +69,32 @@ export const Inventory = () => {
                             {
                                 categoryJson.map((item, key) => (
                                     <div key={key} className="m-1 p-2 h-full ">
-                                        <Category item={{ name: item?.name, urlPhoto: item?.url }} />
+                                        <Category item={{ name: item?.name, urlPhoto: item?.urlPhoto }} />
                                     </div>
                                 ))
                             }
                         </div>
                         <div className=" h-4/5 m-3">
-                            <Button className="h-full " style={{ backgroundColor: "var(--red-3)" }}>
-                                <IoIosAddCircleOutline size={25} />
-                            </Button>
+                        <FormElastic key={""} item={{
+                        title: "Registrar Categoria",
+                        data: [
+                            {id:"name" , text: "Nombre" , type:"text" , placeholder:"" , value : ""} ,
+                            {id:"description" , text: "Descripcion" , type:"text" , placeholder:"" , value : ""} ,
+                            {id:"image" , text: "Foto" , type:"file" },
+
+
+                        ],select:[],
+                        form: {
+                            method: 'POST',
+                            url: '/api/category/add',
+                            headers:{ "Content-Type": "multipart/form-data"},
+                            axios:AxiosClientFormData,
+                            redirect :`/Inventory`
+                        }
+                        ,button:{
+                            name:"Agregar"
+                        }
+                    }} />
                         </div>
                     </div>
                     <div className="flex h-full mt-10">
