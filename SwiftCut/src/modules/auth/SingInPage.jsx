@@ -23,26 +23,28 @@ export const SingInPage = () => {
             password: yup.string().required('Campo obligatorio'),
 
         }),
-        onSubmit: async (values, { setSubmiting }) => {
+        onSubmit: async (values, { setSubmitting }) => {
             try {
                 const response = await AxiosClientJSON({
-                    url: '/auth/singin',
+                    url: '/api/auth/signin',
                     method: 'POST',
                     data: values
                 });
-                console.log(response);
-                if (!response.console.error) {
-                    dispah({ type: 'SIGNNG', payload: response.data })
-                    navigate('/', { replace: true });
+                console.log(!response.error);
+                if (!response.error) {
+                    sessionStorage.setItem('token' , response.data)
+                    sessionStorage.setItem('email' ,  formik.values.username)
+                    navigate('/users', { replace: true });
                 } else throw Error("Error");
             } catch (error) {
+                console.log(error)
                 customAlert(
                     'Iniciar Sesion',
                     'Usuario y/o contraseña incorrecta',
                     'info'
                 );
             } finally {
-                setSubmiting(false);
+                setSubmitting(false);
             }
         }
     });

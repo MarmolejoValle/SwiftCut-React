@@ -1,7 +1,8 @@
 import { Avatar, Badge, Button, Card, FileInput, Label, Table } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {AxiosClientJSON} from "../../config/http-client/axios-client";
+import {AxiosClientFormData, AxiosClientJSON} from "../../config/http-client/axios-client";
+import { FormElastic } from "../../components/FormElastic";
 
 export const Profile = () => {
     const [userJson, setUserJson] = useState({});
@@ -10,6 +11,7 @@ export const Profile = () => {
 
 
     const [mode,setMode] = useState("");
+    const [rolesJson, setRolesJson] = useState([]);
 
     const { idUser } = useParams();
     useEffect(() => {
@@ -30,6 +32,14 @@ export const Profile = () => {
                     method: 'POST',
                     data: { id: idUser }
                 });
+                const rolesP = await AxiosClientJSON({
+                    url: '/api/rols/readAll',
+                    method: 'GET',
+                    data: ''
+                });
+               
+                // Aquí puedes hacer algo con la respuesta, como establecer el estado del componente
+                setRolesJson(rolesP.data)
                 // Aquí puedes hacer algo con la respuesta, como establecer el estado del componente
 
                 setUserJson(response.data);
@@ -55,13 +65,41 @@ export const Profile = () => {
                         <div className='flex py-4 first:pt-0 last:pb-0  items-center ml-16'>
                             <Avatar img={userJson?.personDto?.urlPhoto} alt="avatar of Jese" rounded size="xl" bordered/>
 
-                            <div class="ml-3 overflow-hidden">
+                            <div className="ml-3 overflow-hidden">
                                 <p className="text-2xl font-medium text-white">{userJson?.personDto?.name} {userJson?.personDto?.lastName} </p>
                                 <p className="text-1xl text-slate-400 truncate">{userJson?.rolDto?.type}</p>
                             </div>
                         </div>
                         <div>
-                            <Button style={{ backgroundColor: 'var(--red-3)' }}> Modificar</Button>
+                        <FormElastic key={""} item={{
+                        title: "Modificar de Usuario",
+                        data: [
+                             
+
+                            {id:"name" , text: "Nombre" , type:"text" , placeholder:"Alberto" , value : userJson?.personDto?.name} ,
+                            {id:"lastName" , text: "Apellidos" , type:"text" , placeholder:"Cardenas Herrera" , value:userJson?.personDto?.lastName},
+                            {id:"phone" , text: "Telefono" , type:"tel" , placeholder:"2418342349", value:userJson?.personDto?.name},
+                            {id:"image" , text: "Foto" , type:"file" , value:""},
+                            {id:"sex" , text: "Sexo" , type:"text" , placeholder:"/", value:userJson?.personDto?.sex},
+                            {id:"email" , text: "Correo" , type:"email" , placeholder:"ejemplo@correo.com", value:userJson?.email},
+                            {id:"password" , text: "Contraseña" , type:"password" , placeholder:"**************", value:""},
+                            {id:"id" , text: "" , type:"hidden" , placeholder:"" , value : userJson?.id}
+
+                        ],
+                        select:[
+                            {id:"rols" , text: "Roles" , type:"text" , data:rolesJson},
+                        ],
+                        form: {
+                            method: 'PUT',
+                            url: '/api/employees/update',
+                            headers:{ "Content-Type": "multipart/form-data"},
+                            axios:AxiosClientFormData,
+                            redirect :`/Users/Profile/${userJson?.id}`
+                        }
+                        ,button:{
+                            name:"Modificar"
+                        }
+                    }} />
                         </div>
                     </div>
                     <div className="flex-1 flex justify-around bg-slate-200 rounded-b-lg p-2 ">

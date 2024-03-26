@@ -45,7 +45,7 @@ AxiosClientFormData.interceptors.response.use(
 )
 
 const requestHandler = (req) => {
-    const session = JSON.parse(localStorage.getItem('user'));
-    if (session?.token) req.headers['Authorization'] = `Bearer ${session.token}`;
+    const token = sessionStorage.getItem('token');
+    if (token) req.headers['Authorization'] = `Bearer ${token}`;
     return req;
 }

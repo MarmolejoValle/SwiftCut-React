@@ -13,6 +13,7 @@ export const Users = () => {
 
 
 
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -26,11 +27,10 @@ export const Users = () => {
                     method: 'GET',
                     data: ''
                 });
+               
                 // Aquí puedes hacer algo con la respuesta, como establecer el estado del componente
-
                 setUsersJson(response.data);
                 setRolesJson(rolesP.data)
-                console.log(rolesJson);
             } catch (error) {
                 // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
                 console.error('Error fetching data:', error);
@@ -75,7 +75,10 @@ export const Users = () => {
                             method: 'POST',
                             url: '/api/employees/add',
                             headers:{ "Content-Type": "multipart/form-data"},
-                            axios:AxiosClientFormData
+                            axios:AxiosClientFormData,
+                        }
+                        , button:{
+                            name:"agregar"
                         }
                     }} />
 

@@ -16,12 +16,40 @@ import { Ordens } from './modules/admin/Ordens.jsx'
 
 import { Label } from 'flowbite-react'
 
+import { useEffect, useState } from "react";
+import { AxiosClientJSON } from './config/http-client/axios-client.js'
+
 const App = () => {
+
+const [user, setUser] = useState([]);
+useEffect(() => {
+    const fetchData = async () => {
+        try {
+            
+            const info = await AxiosClientJSON({
+                url: '/api/employees/info',
+                method: 'POST',
+                data: {email : sessionStorage.getItem('email')}
+            });
+            // Aquí puedes hacer algo con la respuesta, como establecer el estado del componente
+            setUser(info.data);
+           
+        } catch (error) {
+            // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
+            console.error('Error fetching data:', error);
+        }
+    };
+    fetchData();
+
+    // Llamar a fetchData cuando el componente se monta
+
+
+}, []);
 
   return (
     <>
       <div className='flex'>
-        <ProfileHead />
+        <ProfileHead user={user}/>
         <NavBar />
         <div className='mt-5 w-full p-4 overflow-hidden'>
           <Routes >
