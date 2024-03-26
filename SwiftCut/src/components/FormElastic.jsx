@@ -9,32 +9,30 @@ import AuthContext from "../config/context/auth-context";
 
 
 export const FormElastic = ({ item }) => {
-    const [valuesItem, setValuesItem] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const dispah = useContext(AuthContext);
     const navigate = useNavigate();
 
-   
 
     const formik = useFormik({
         initialValues: {},
         validationSchema: yup.object().shape({}),
         onSubmit: async (values, { setSubmitting }) => {
             try {
+
                 const response = await item?.form?.axios({
                     url: item?.form?.url,
                     method: item?.form?.method,
                     data: values,
                 });
-                console.log(response.status == 'OK');
-                if (response.status == 'OK') {
-                    dispah({ type: '/users', payload: response.data })
-                    navigate('/', { replace: true });
-                } 
+                if (response.status == 'OK') {  
+                    
+                    navigate(item?.form?.redirect, { replace: true });
+                }
                 else {
                     throw Error("Error");
                 }
-               
+
             } catch (error) {
                 console.log(error)
                 customAlert(
@@ -47,11 +45,34 @@ export const FormElastic = ({ item }) => {
             }
         }
     });
+    const valuesInicia = async (itemFiel) => {
+        console.log(itemFiel)
+        let valuesItem = {};
+        const mapeo = () => {
+            itemFiel.data.map((input) => {
+                if (input.value) {
+                    valuesItem = {
+                        ...valuesItem,
+                        [input.id]: input.value
+                    };
+                }
 
+            })
+            formik.setValues(valuesItem);
+        }
+        mapeo();
+
+
+        console.log(valuesItem)
+
+        console.log(formik.values)
+
+
+    }
     return (
         <>
-            <Button onClick={() => setOpenModal(true)} color="dark" size={'xs'} className="ml-3" style={{ backgroundColor: 'var(--red-3)' }}>Agregar</Button>
-            <Modal show={openModal} size="3xl" popup onClose={() => setOpenModal(false)} >
+            <Button onClick={() => { valuesInicia(item); setOpenModal(true); }} color="dark" size={'xs'} className="ml-3" style={{ backgroundColor: 'var(--red-3)' }}>{item?.button?.name} </Button>
+            <Modal show={openModal} size="3xl" popup onClose={() => setOpenModal(false)} className="duration-75" >
                 <form className="space-y-4 md:space-y-6 p-2 pt-3" onSubmit={formik.handleSubmit} id="forms" noValidate encType="multipart/form-data">
                     <Modal.Header ><h3 className="text-2xl font-medium text-gray-900 dark:text-white">{item?.title}</h3></Modal.Header>
                     <Modal.Body>
@@ -79,14 +100,18 @@ export const FormElastic = ({ item }) => {
                                         )
                                     }
                                     else {
+
                                         return (
                                             <div className="w-2/5 m-3" key={input.id}>
                                                 <div className="mb-2 block">
                                                     <Label htmlFor={input.id} value={input.text} />
                                                 </div>
                                                 <TextInput
+
+                                                    value={formik.values[input.id]}
                                                     onChange={formik.handleChange}
                                                     onBlur={formik.handleBlur}
+
                                                     id={input.id}
                                                     placeholder={input.placeholder}
                                                     type={input.type}
@@ -97,14 +122,20 @@ export const FormElastic = ({ item }) => {
 
                                     }
 
-                                })}
+                                },)
+
+                                }
+
                                 {item?.select.map((select) => (
                                     <div className="w-2/5 m-3" key={select.id}>
                                         <div className="mb-2 block">
                                             <Label htmlFor={select.id} value={select.text} />
                                         </div>
-                                        <Select id={select.id} required  onChange={formik.handleChange}
-                                                    onBlur={formik.handleBlur} >
+                                        <Select id={select.id} required
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur} >
+                                            <option value="">Seleccionar</option>
+
                                             {select.data.map(elemento => (
                                                 <option key={elemento.id} value={elemento.id} > {elemento.type}</option>
                                             ))}
@@ -116,11 +147,13 @@ export const FormElastic = ({ item }) => {
                                         type="submit"
                                         color="dark"
                                         style={{ backgroundColor: "var(--red-3)" }}
-                                        onClick={()=>{
-                                            let forms = document.getElementById('forms');
-                                            const formsData = new FormData(forms);
-                                            formik.setValuesItem(formsData);
-                                        }}
+                                        onSubmit={
+                                            () => {
+                                                let forms = document.getElementById('forms');
+                                                const formsData = new FormData(forms);
+                                                formik.setValues(formsData);
+                                            }
+                                        }
                                         className="w-full h-fit"
                                         disabled={formik.isSubmitting && formik.isValid}
                                     >{formik.isSubmitting ? (<Spinner />) :
