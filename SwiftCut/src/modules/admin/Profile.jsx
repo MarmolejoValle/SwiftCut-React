@@ -13,45 +13,45 @@ export const Profile = () => {
     const [mode,setMode] = useState("");
     const [rolesJson, setRolesJson] = useState([]);
 
+    const fetchData = async () => {
+        try {
+            const response = await AxiosClientJSON({
+                url: '/api/employees/readEmployeeId',
+                method: 'POST',
+                data: { id: idUser }
+            });
+            const responseOrdensCount = await AxiosClientJSON({
+                url: '/api/employees/countOrdens',
+                method: 'POST',
+                data: { id: idUser }
+            });
+            const responseOrdens = await AxiosClientJSON({
+                url: '/api/employees/Ordens',
+                method: 'POST',
+                data: { id: idUser }
+            });
+            const rolesP = await AxiosClientJSON({
+                url: '/api/rols/readAll',
+                method: 'GET',
+                data: ''
+            });
+           
+            // Aquí puedes hacer algo con la respuesta, como establecer el estado del componente
+            setRolesJson(rolesP.data)
+            // Aquí puedes hacer algo con la respuesta, como establecer el estado del componente
+
+            setUserJson(response.data);
+            setOrdensCountJson(responseOrdensCount.data);
+            setOrdensJson(responseOrdens.data);
+            if(userJson?.personDto?.statusPersonDto?.type === "Activo" ) setMode("success");
+            if(userJson?.personDto?.statusPersonDto?.type ==="Bloqueado" ) setMode("dark");
+        } catch (error) {
+            // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
+            console.error('Error fetching data:', error);
+        }
+    };
     const { idUser } = useParams();
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await AxiosClientJSON({
-                    url: '/api/employees/readEmployeeId',
-                    method: 'POST',
-                    data: { id: idUser }
-                });
-                const responseOrdensCount = await AxiosClientJSON({
-                    url: '/api/employees/countOrdens',
-                    method: 'POST',
-                    data: { id: idUser }
-                });
-                const responseOrdens = await AxiosClientJSON({
-                    url: '/api/employees/Ordens',
-                    method: 'POST',
-                    data: { id: idUser }
-                });
-                const rolesP = await AxiosClientJSON({
-                    url: '/api/rols/readAll',
-                    method: 'GET',
-                    data: ''
-                });
-               
-                // Aquí puedes hacer algo con la respuesta, como establecer el estado del componente
-                setRolesJson(rolesP.data)
-                // Aquí puedes hacer algo con la respuesta, como establecer el estado del componente
-
-                setUserJson(response.data);
-                setOrdensCountJson(responseOrdensCount.data);
-                setOrdensJson(responseOrdens.data);
-                if(userJson?.personDto?.statusPersonDto?.type === "Activo" ) setMode("success");
-                if(userJson?.personDto?.statusPersonDto?.type ==="Bloqueado" ) setMode("dark");
-            } catch (error) {
-                // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
-                console.error('Error fetching data:', error);
-            }
-        };
         fetchData();
 
     }, []);
@@ -71,7 +71,7 @@ export const Profile = () => {
                             </div>
                         </div>
                         <div>
-                        <FormElastic key={""} item={{
+                        <FormElastic refresh={fetchData} key={""} item={{
                         title: "Modificar de Usuario",
                         data: [
                              
@@ -98,7 +98,8 @@ export const Profile = () => {
                         }
                         ,button:{
                             name:"Modificar"
-                        }
+                        },refreshDate : idUser
+                    
                     }} />
                         </div>
                     </div>
