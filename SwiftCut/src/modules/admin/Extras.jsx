@@ -38,7 +38,7 @@ export const Extras = () =>{
         <>
           <div className=" w-full p-5">
                 <div className="m-4 flex" >
-                <FormElastic key={""} item={{
+                <FormElastic  key={""} item={{
                         title: "Registro de extra",
                         data: [
                              

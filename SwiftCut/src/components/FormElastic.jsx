@@ -1,5 +1,5 @@
 import { Button, Label, Modal, Select, Spinner, TextInput, Textarea } from "flowbite-react";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import { AxiosClientFormData, AxiosClientJSON } from "../config/http-client/axios-client";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,8 @@ import * as yup from 'yup';
 import AuthContext from "../config/context/auth-context";
 
 
-export const FormElastic = ({ item }) => {
+export const FormElastic = ({ item, refresh, refreshExtra }) => {
+
     const [openModal, setOpenModal] = useState(false);
     const dispah = useContext(AuthContext);
     const navigate = useNavigate();
@@ -25,9 +26,14 @@ export const FormElastic = ({ item }) => {
                     method: item?.form?.method,
                     data: values,
                 });
-                if (response.status == 'OK') {  
-                    
-                    navigate(item?.form?.redirect, { replace: true });
+                if (response.status == 'OK') {
+
+                    await refresh(item?.refreshDate);
+
+                    if (item?.refreshExtra) await refreshExtra(item?.refreshExtra);
+
+
+                    setOpenModal(false)
                 }
                 else {
                     throw Error("Error");
@@ -46,7 +52,6 @@ export const FormElastic = ({ item }) => {
         }
     });
     const valuesInicia = async (itemFiel) => {
-        console.log(itemFiel)
         let valuesItem = {};
         const mapeo = () => {
             itemFiel.data.map((input) => {
@@ -63,9 +68,7 @@ export const FormElastic = ({ item }) => {
         mapeo();
 
 
-        console.log(valuesItem)
 
-        console.log(formik.values)
 
 
     }
@@ -79,8 +82,28 @@ export const FormElastic = ({ item }) => {
                         <div className="space-y-6">
 
                             <div className="flex flex-wrap w-full">
-                                {item?.data.map((input) => {
-                                    if (input.type === "textArea") {
+                                {item?.data?.map((input) => {
+                                    if (input.type === "hidden") {
+                                        return (
+                                            <div className=" " key={input.id} >
+                                                <div className="mb-2 block">
+                                                    <Label htmlFor={input.id} value={input.text} />
+                                                </div>
+                                                <TextInput
+
+                                                    value={formik.values[input.id]}
+                                                    onChange={formik.handleChange}
+                                                    onBlur={formik.handleBlur}
+
+                                                    id={input.id}
+                                                    placeholder={input.placeholder}
+                                                    type={input.type}
+                                                    required
+                                                />
+                                            </div>
+                                        )
+                                    }
+                                    else if (input.type === "textArea") {
                                         return (
                                             <div className="w-2/5 m-3" key={input.id}>
                                                 <div className="mb-2 block">
@@ -100,19 +123,19 @@ export const FormElastic = ({ item }) => {
                                             </div>
                                         )
                                     }
-                                    else if (input.id === "image") {
+                                    else if (input?.id === "image") {
                                         return (
-                                            <div className="w-2/5 m-3" key={input.id}>
+                                            <div className="w-2/5 m-3" key={input?.id}>
                                                 <div className="mb-2 block">
-                                                    <Label htmlFor={input.id} value={input.text} />
+                                                    <Label htmlFor={input?.id} value={input?.text} />
                                                 </div>
                                                 <input
                                                     onChange={(e) => {
                                                         formik.setFieldValue('image', e.target.files[0]);
                                                     }}
                                                     onBlur={formik.handleBlur}
-                                                    id={input.id}
-                                                    placeholder={input.placeholder}
+                                                    id={input?.id}
+                                                    placeholder={input?.placeholder}
                                                     type="file"
                                                     required
                                                 />
@@ -122,9 +145,9 @@ export const FormElastic = ({ item }) => {
                                     else {
 
                                         return (
-                                            <div className="w-2/5 m-3" key={input.id}>
+                                            <div className="w-2/5 m-3" key={input?.id}>
                                                 <div className="mb-2 block">
-                                                    <Label htmlFor={input.id} value={input.text} />
+                                                    <Label htmlFor={input.id} value={input?.text} />
                                                 </div>
                                                 <TextInput
 
@@ -146,7 +169,7 @@ export const FormElastic = ({ item }) => {
 
                                 }
 
-                                {item?.select.map((select) => (
+                                {item?.select?.map((select) => (
                                     <div className="w-2/5 m-3" key={select.id}>
                                         <div className="mb-2 block">
                                             <Label htmlFor={select.id} value={select.text} />
@@ -156,9 +179,28 @@ export const FormElastic = ({ item }) => {
                                             onBlur={formik.handleBlur} >
                                             <option value="">Seleccionar</option>
 
-                                            {select.data.map(elemento => (
-                                                <option key={elemento.id} value={elemento.id} > {elemento.type}</option>
-                                            ))}
+                                            {
+
+
+                                                select?.data?.map(elemento => {
+                                                    if (elemento.type != null) {
+                                                        return (
+                                                            <option key={elemento.id} value={elemento.id} > {elemento.type}</option>)
+
+                                                    }
+                                                    if (elemento.name != null) {
+                                                        return (
+                                                            <option key={elemento.id} value={elemento.id} > {elemento.name}</option>)
+
+                                                    }
+                                                })
+
+
+
+
+
+
+                                            }
                                         </Select>
                                     </div>
                                 ))}

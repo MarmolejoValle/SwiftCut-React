@@ -1,63 +1,64 @@
 import { useEffect, useState } from "react";
 import { Category } from "../../components/Category";
-import { Button, Label } from "flowbite-react";
+import { Button, Label, Spinner } from "flowbite-react";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { ProductList } from "../../components/ProductList";
 import { CardProduct } from "../../components/CardProduct";
+import { BeatLoader, PuffLoader } from 'react-spinners'
 import { FormElastic } from "../../components/FormElastic";
 import { AxiosClientFormData, AxiosClientJSON } from "../../config/http-client/axios-client";
+import { PiTrendUpDuotone } from "react-icons/pi";
 
 
 export const Inventory = () => {
     const [categoryJson, setCategoryJson] = useState([]);
+    const [productsJson, setProductsJson] = useState(null);
+    const [categoryId, setCategoryId] = useState(0);
+    const [idCategoryRefresh, setIdCategoryRefresh] = useState(0);
+    const [spinner, setSpinner] = useState(true);
+
+
+    const fetchData = async () => {
+        try {
+            const response = await AxiosClientJSON({
+                url: '/api/category/readAll',
+                method: 'GET',
+                data: ''
+            });
+            setCategoryJson(response.data);
+
+        } catch (error) {
+            // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
+            console.error('Error fetching data:', error);
+        }
+    };
 
     useEffect(() => {
 
-        const fetchData = async () => {
-            try {
-                const response = await AxiosClientJSON({
-                    url: '/api/category/readAll',
-                    method: 'GET',
-                    data: ''
-                });
-                
-                
-
-                setCategoryJson(response.data);
-               
-            } catch (error) {
-                // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
-                console.error('Error fetching data:', error);
-            }
-        };
+       
         fetchData();
 
     }, []);
-   
-    const [product, setProduct] = useState(
-        {
-            id:32,
-            name: "chueton",
-            urlPhoto: "https://carnesideal.tienda/cdn/shop/products/CRD15-1_2ec75d12-afea-432c-b0e8-8cf108370bba.jpg?v=1630341701",
-            description: "Es una combinación de carne y hueso de la columna del cerdo. Este corte de carne es utilizado para mole de olla o para hacer guisado en salsa verde, roja,verdolagas.",
-            count: 20,
-            extras: [
-                {
-                    id:20,
-                    name: "Ahumado",
-                    price: 30,
-                    
-                },
-                {
-                    id:21,
-                    name: "Enchilado",
-                    price: 50,
-                    
-                }
-            ]
 
+    const ProductsData = async (idC) => {
+        try {
+            setSpinner(true)
+            const response = await AxiosClientJSON({
+                url: '/api/product/readCategory',
+                method: 'POST',
+                data: { id: idC }
+            });
+            setCategoryId(idC)
+            setProductsJson(response.data);
+            setSpinner(false)
+
+
+        } catch (error) {
+            // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
+            console.error('Error fetching data:', error);
         }
-    );
+    };
+
     return (
         <>
             <div className="mt-3  w-full m-2 p-4">
@@ -68,44 +69,42 @@ export const Inventory = () => {
                         <div className=" flex overflow-x-scroll  h-full  w-11/12 overflow-y-hidden  items-center ">
                             {
                                 categoryJson.map((item, key) => (
-                                    <div key={key} className="m-1 p-2 h-full ">
-                                        <Category item={{ name: item?.name, urlPhoto: item?.urlPhoto }} />
+                                    <div key={key} className="m-1 p-2 h-full hover:-translate-y-2 duration-75" onClick={() => { ProductsData(item?.id); setProductsJson(null); setIdCategoryRefresh(item?.id) }} >
+                                        <Category item={{ name: item?.name, urlPhoto: item?.urlPhoto }}  />
                                     </div>
                                 ))
                             }
                         </div>
                         <div className=" h-4/5 m-3">
-                        <FormElastic key={""} item={{
-                        title: "Registrar Categoria",
-                        data: [
-                            {id:"name" , text: "Nombre" , type:"text" , placeholder:"" , value : ""} ,
-                            {id:"description" , text: "Descripcion" , type:"text" , placeholder:"" , value : ""} ,
-                            {id:"image" , text: "Foto" , type:"file" },
+                            <FormElastic  refresh={fetchData} key={""} item={{
+                                title: "Registrar Categoria",
+                                data: [
+                                    { id: "name", text: "Nombre", type: "text", placeholder: "", value: "" },
+                                    { id: "image", text: "Foto", type: "file" },
+                                    { id: "description", text: "Descripcion", type: "textArea", placeholder: "", value: "" },
 
 
-                        ],select:[],
-                        form: {
-                            method: 'POST',
-                            url: '/api/category/add',
-                            headers:{ "Content-Type": "multipart/form-data"},
-                            axios:AxiosClientFormData,
-                            redirect :`/Inventory`
-                        }
-                        ,button:{
-                            name:"Agregar"
-                        }
-                    }} />
+                                ], select: [],
+                                form: {
+                                    method: 'POST',
+                                    url: '/api/category/add',
+                                    headers: { "Content-Type": "multipart/form-data" },
+                                    axios: AxiosClientFormData,
+                                    redirect: `/Inventory`
+                                }
+                                , button: {
+                                    name: "Agregar"
+                                }
+                            }} />
                         </div>
                     </div>
                     <div className="flex h-full mt-10">
-                        <div className="flex-1 m-3 ">
-                        <Label value="Productos" className=" m-4 text-xl" />
+                        {productsJson ? <ProductList productJson={productsJson} idCategory={categoryId} refresh={ProductsData}  idC={idCategoryRefresh}/>
+                            : <div className="w-full flex justify-center items-center h-52 flex-wrap">
+                                <PuffLoader size={50} />
+                            </div>
+                        }
 
-                            <ProductList />
-                        </div>
-                        <div className="flex-[2] ">
-                            <CardProduct item={product}/>
-                        </div>
                     </div>
 
 
