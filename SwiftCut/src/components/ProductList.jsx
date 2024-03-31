@@ -31,10 +31,12 @@ export const ProductList = ({ productJson, idCategory  ,refresh ,idC}) => {
                 data: { id: idP }
             });
             setProduct(responseProduct.data);
-            setExtras(responseExtras.data)
+            setExtras(responseExtras.data);
         } catch (error) {
             // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
             console.error('Error fetching data:', error);
+            setProduct(null);
+            
         }
     };
 

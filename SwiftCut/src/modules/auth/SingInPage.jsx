@@ -34,7 +34,7 @@ export const SingInPage = () => {
                 if (!response.error) {
                     sessionStorage.setItem('token' , response.data)
                     sessionStorage.setItem('email' ,  formik.values.username)
-                    navigate('/users', { replace: true });
+                    navigate('/Users', { replace: true });
                 } else throw Error("Error");
             } catch (error) {
                 console.log(error)
@@ -64,7 +64,7 @@ export const SingInPage = () => {
                                     <Label className="block md-2 text-sm font-medium  text text-gray-400">Sabores que Cortan a la Perfección</Label>
                                 </div>
                                 <form className="space-y-4 md:space-y-6 p-9  " onSubmit={formik.handleSubmit} noValidate>
-                                    <div class="mx-auto w-screen-sm">
+                                    <div className="mx-auto w-screen-sm">
                                         <div class="grid grid-flow-col justify-stretch space-x-4">
                                             <FloatingLabel variant="outlined" label="Usuario" type="text" className=""
                                                 name="username"
