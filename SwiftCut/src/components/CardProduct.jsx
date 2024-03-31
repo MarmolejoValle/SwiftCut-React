@@ -2,6 +2,7 @@ import { Badge, Button, Card, Label, Table, Textarea } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { FormElastic } from "./FormElastic";
 import { AxiosClientFormData, AxiosClientJSON } from "../config/http-client/axios-client";
+import { customAlert } from "../config/alert/alert";
 
 export const CardProduct = ({ item, extras, refresh, idProducto, refreshCategory, idCategory }) => {
     const [extrasJson , setExtras] = useState([])
@@ -19,7 +20,30 @@ export const CardProduct = ({ item, extras, refresh, idProducto, refreshCategory
             console.error('Error fetching data:', error);
         }
     };
+    const deleteProduct = async (id) => {
+        
+        try {
+            const responseExtras = await AxiosClientJSON({
+                url: '/api/productExtras/delete',
+                method: 'DELETE',
+                data: {id : id}
+            });
 
+            if(responseExtras.status == 'OK')
+            {
+                refresh(idProducto);
+                refreshCategory(idCategory);
+            }
+        } catch (error) {
+            // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
+            console.error('Error fetching data:', error);
+            customAlert(
+                'Registro incorrecto',
+                'Revisa los datos',
+                'error'
+            );
+        }
+    };
     useEffect(() => {
 
        
@@ -65,7 +89,11 @@ export const CardProduct = ({ item, extras, refresh, idProducto, refreshCategory
                             name: "Modificar"
                         }
                         , refreshDate: idProducto
-                        , refreshExtra: idCategory
+                        , refreshExtra: idCategory,
+                        delete:{
+                            url:"/api/product/delete",
+                            values:{id:item?.id },
+                        }
                     }} />                    <h2 className="text-xl">{item?.name} </h2>
                     <Badge color={status(item?.quantity)?.mode} size="xs" className="justify-center font-medium">
                         {status(item?.quantity)?.value}
@@ -116,15 +144,15 @@ export const CardProduct = ({ item, extras, refresh, idProducto, refreshCategory
                                 { id: "idProduct", text: "", type: "hidden", placeholder: "", value: item?.id },
 
 
-                            ], select: [{id:"idExtra", text: "Extras" , type:"num" ,data:extrasJson}],
+                            ], select: [{id:"idExtra", text: "" , type:"num" ,data:extrasJson}],
                             form: {
-                                method: 'PUT',
-                                url: '/api/product/addExtra',
+                                method: 'POST',
+                                url: '/api/productExtras/add',
                                 headers: { "Content-Type": "multipart/form-data" },
                                 axios: AxiosClientJSON,
                             }
                             , button: {
-                                name: "editar"
+                                name: "Agregar"
                             }
                             , refreshDate: idProducto
                             , refreshExtra: idCategory
@@ -134,13 +162,13 @@ export const CardProduct = ({ item, extras, refresh, idProducto, refreshCategory
                         <Table hoverable className="shadow-none " align="center" >
                             <Table.Head >
                                 <Table.HeadCell>Nombre</Table.HeadCell>
-                                <Table.HeadCell>Kilos</Table.HeadCell>
+                                <Table.HeadCell>Precio</Table.HeadCell>
                                 <Table.HeadCell>
                                     <span className="sr-only">Edit</span>
                                 </Table.HeadCell>
                             </Table.Head>
                             <Table.Body>
-                                {extras.map((item, key) => (
+                                {extras?.map((item, key) => (
                                     <Table.Row key={key} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                                         <Table.Cell>
                                             <div class=" overflow-hidden">
@@ -148,10 +176,10 @@ export const CardProduct = ({ item, extras, refresh, idProducto, refreshCategory
                                             </div>
                                         </Table.Cell>
                                         <Table.Cell>
-                                            <Label value={item?.price} className="text-xs text-gray-500" />
+                                            <Label value={`${item?.price} x Kg`} className="text-xs text-gray-500" />
                                         </Table.Cell>
                                         <Table.Cell>
-                                            <Button color="red">Eliminar</Button>
+                                            <Button color="red" onClick={()=>deleteProduct(item?.id)}>Eliminar</Button>
                                         </Table.Cell>
                                     </Table.Row>
                                 ))}

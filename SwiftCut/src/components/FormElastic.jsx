@@ -8,9 +8,11 @@ import * as yup from 'yup';
 import AuthContext from "../config/context/auth-context";
 
 
-export const FormElastic = ({ item, refresh, refreshExtra }) => {
+export const FormElastic = ({ item, refresh, refreshExtra , hidden}) => {
 
     const [openModal, setOpenModal] = useState(false);
+    const [deleteSpinner, setDeleteSpinner] = useState(false);
+
     const dispah = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -28,7 +30,7 @@ export const FormElastic = ({ item, refresh, refreshExtra }) => {
                 });
                 if (response.status == 'OK') {
 
-                    await refresh(item?.refreshDate);
+                    if(refresh)await refresh(item?.refreshDate);
 
                     if (item?.refreshExtra) await refreshExtra(item?.refreshExtra);
 
@@ -36,7 +38,7 @@ export const FormElastic = ({ item, refresh, refreshExtra }) => {
                     setOpenModal(false)
                 }
                 else {
-                    throw Error("Error");
+                    throw  Error("Error");
                 }
 
             } catch (error) {
@@ -67,25 +69,54 @@ export const FormElastic = ({ item, refresh, refreshExtra }) => {
         }
         mapeo();
 
+    }
 
+    const deleteRegister = async (itemDelete) => {
+        setDeleteSpinner(true)
+        try {
 
+            const response = await AxiosClientJSON({
+                url: itemDelete?.url,
+                method: 'DELETE',
+                data: itemDelete?.values,
+            });
+            console.log(response)
+            if (response.status == 'OK') {
 
+               if(itemDelete?.navigate) navigate(itemDelete?.navigate , { replace:true})
+               if(refresh)await refresh(item?.refreshDate);
 
+               if (item?.refreshExtra) await refreshExtra(item?.refreshExtra);
+                setOpenModal(false)
+            }
+            else {
+                console.log(error);
+                throw  Error("Error");
+
+            }
+
+        } catch (error) {
+            customAlert(
+                'Registro incorrecto',
+                'Revisa los datos',
+                'error'
+            );
+        }
     }
     return (
         <>
-            <Button onClick={() => { valuesInicia(item); setOpenModal(true); }} color="dark" size={'xs'} className="ml-3" style={{ backgroundColor: 'var(--red-3)' }}>{item?.button?.name} </Button>
-            <Modal show={openModal} size="3xl" popup onClose={() => setOpenModal(false)} className="duration-75" >
+            <Button onClick={() => { valuesInicia(item); setOpenModal(true); }} color="dark" size={'xs'} className={`ml-3 ${hidden}`} style={{ backgroundColor: 'var(--red-3)' }}>{item?.button?.name} </Button>
+            <Modal show={openModal} size="4xl" popup onClose={() => setOpenModal(false)} className="duration-75" >
                 <form className="space-y-4 md:space-y-6 p-2 pt-3" onSubmit={formik.handleSubmit} id="forms" noValidate encType="multipart/form-data">
                     <Modal.Header ><h3 className="text-2xl font-medium text-gray-900 dark:text-white">{item?.title}</h3></Modal.Header>
                     <Modal.Body>
                         <div className="space-y-6">
 
-                            <div className="flex flex-wrap w-full">
+                            <div className="flex flex-wrap w-full items-center justify-center">
                                 {item?.data?.map((input) => {
                                     if (input.type === "hidden") {
                                         return (
-                                            <div className=" " key={input.id} >
+                                            <div className="hidden" key={input.id} >
                                                 <div className="mb-2 block">
                                                     <Label htmlFor={input.id} value={input.text} />
                                                 </div>
@@ -204,32 +235,47 @@ export const FormElastic = ({ item, refresh, refreshExtra }) => {
                                         </Select>
                                     </div>
                                 ))}
-                                <div className="flex justify-center items-center w-2/5 ml-3  ">
-                                    <Button
-                                        type="submit"
-                                        color="dark"
-                                        style={{ backgroundColor: "var(--red-3)" }}
-                                        onSubmit={
-                                            () => {
-                                                let forms = document.getElementById('forms');
-                                                const formsData = new FormData(forms);
-                                                formik.setValues(formsData);
-                                            }
-                                        }
-                                        className="w-full h-fit"
-                                        disabled={formik.isSubmitting && formik.isValid}
-                                    >{formik.isSubmitting ? (<Spinner />) :
-                                        (<>
 
-                                            Registrar
-                                        </>)} </Button>
-                                </div>
 
                             </div>
+                            <div className="flex justify-between items-end w-full ml-3  ">
+                                {item?.delete ? <Button
+                                    type="button"
+                                    color="dark"
+                                    style={{ backgroundColor: "var(--red-3)" }}
+                                    onClick={
+                                        () => deleteRegister(item?.delete)
+                                    }
+                                    className="w-full h-fit w-1/5"
+                                >{deleteSpinner ? (<Spinner />) :
+                                (<>
 
+                                    Eliminar
+                                </>)}</Button> :null
+                            }
+                                <Button
+                                    type="submit"
+                                    color="dark"
+                                    onSubmit={
+                                        () => {
+                                            let forms = document.getElementById('forms');
+                                            const formsData = new FormData(forms);
+                                            formik.setValues(formsData);
+                                        }
+                                    }
+                                    className="w-full h-fit w-1/5"
+                                    disabled={formik.isSubmitting && formik.isValid}
+                                >{formik.isSubmitting ? (<Spinner />) :
+                                    (<>
+
+                                        Registrar
+                                    </>)} </Button>
+                            </div>
                         </div>
                     </Modal.Body>
+
                 </form>
+
             </Modal>
         </>
     );

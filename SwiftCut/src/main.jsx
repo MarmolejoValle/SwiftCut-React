@@ -1,16 +1,26 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import App from './App'
 import AuthContext from './config/context/auth-context'
+import { SingInPage } from './modules/auth/SingInPage'
+import { Routers } from './router/router'
+import { ProtectedRouters } from './router/ProtectedRouters'
 
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
 
-    <BrowserRouter>
-      <App />
+    <BrowserRouter basename="/" future={{ v7_startTransition: true }}>
+      <Routes >
+        <Route  path="/" element={<SingInPage />} />
+        <Route  path="/*" element={
+          <ProtectedRouters>
+            <Routers/>
+          </ProtectedRouters>
+        } />
+      </Routes>
     </BrowserRouter>
 
   </React.StrictMode>

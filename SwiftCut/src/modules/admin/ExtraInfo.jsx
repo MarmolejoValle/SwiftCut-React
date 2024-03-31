@@ -63,6 +63,11 @@ export const ExtraInfo = () => {
                         }
                         ,button:{
                             name:"Modificar"
+                        },
+                        delete:{
+                            url:"/api/extras/delete",
+                            values:{id:extraJson?.id},
+                            navigate : "/Extras"
                         }
                     }} />
                         </div>

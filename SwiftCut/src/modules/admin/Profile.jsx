@@ -98,8 +98,12 @@ export const Profile = () => {
                         }
                         ,button:{
                             name:"Modificar"
-                        },refreshDate : idUser
-                    
+                        },refreshDate : idUser,
+                        delete:{
+                            url:"/api/employees/delete",
+                            values:{id:idUser},
+                            navigate : "/Users"
+                        }
                     }} />
                         </div>
                     </div>

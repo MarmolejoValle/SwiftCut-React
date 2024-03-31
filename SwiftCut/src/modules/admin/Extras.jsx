@@ -9,25 +9,25 @@ export const Extras = () =>{
     const [extrasJson, setExtrasJson] = useState([]);
 
 
-
+    const fetchData = async () => {
+        try {
+            const response = await AxiosClientJSON({
+                url: '/api/extras/readAll',
+                method: 'GET',
+                data: ''
+            });
+          
+           
+            // Aquí puedes hacer algo con la respuesta, como establecer el estado del componente
+            setExtrasJson(response.data);
+        } catch (error) {
+            // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
+            console.error('Error fetching data:', error);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await AxiosClientJSON({
-                    url: '/api/extras/readAll',
-                    method: 'GET',
-                    data: ''
-                });
-              
-               
-                // Aquí puedes hacer algo con la respuesta, como establecer el estado del componente
-                setExtrasJson(response.data);
-            } catch (error) {
-                // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
-                console.error('Error fetching data:', error);
-            }
-        };
+        
         fetchData();
 
         // Llamar a fetchData cuando el componente se monta
@@ -38,7 +38,7 @@ export const Extras = () =>{
         <>
           <div className=" w-full p-5">
                 <div className="m-4 flex" >
-                <FormElastic  key={""} item={{
+                <FormElastic refresh={fetchData}  key={""} item={{
                         title: "Registro de extra",
                         data: [
                              

@@ -11,31 +11,31 @@ export const Users = () => {
     const [usersJson, setUsersJson] = useState([]);
     const [rolesJson, setRolesJson] = useState([]);
 
-
+    const fetchData = async () => {
+        try {
+            const response = await AxiosClientJSON({
+                url: '/api/employees/readAll',
+                method: 'GET',
+                data: ''
+            });
+            const rolesP = await AxiosClientJSON({
+                url: '/api/rols/readAll',
+                method: 'GET',
+                data: ''
+            });
+           
+            // Aquí puedes hacer algo con la respuesta, como establecer el estado del componente
+            setUsersJson(response.data);
+            setRolesJson(rolesP.data)
+        } catch (error) {
+            // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
+            console.error('Error fetching data:', error);
+        }
+    };
 
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await AxiosClientJSON({
-                    url: '/api/employees/readAll',
-                    method: 'GET',
-                    data: ''
-                });
-                const rolesP = await AxiosClientJSON({
-                    url: '/api/rols/readAll',
-                    method: 'GET',
-                    data: ''
-                });
-               
-                // Aquí puedes hacer algo con la respuesta, como establecer el estado del componente
-                setUsersJson(response.data);
-                setRolesJson(rolesP.data)
-            } catch (error) {
-                // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
-                console.error('Error fetching data:', error);
-            }
-        };
+        
         fetchData();
 
         // Llamar a fetchData cuando el componente se monta
@@ -56,7 +56,7 @@ export const Users = () => {
                 <div className="m-4 flex" >
                 <TextInput type="search" required />
 
-                    <FormElastic key={""} item={{
+                    <FormElastic refresh={fetchData} key={""} item={{
                         title: "Registro de Usuario",
                         data: [
                             {id:"name" , text: "Nombre" , type:"text" , placeholder:"Alberto"},
@@ -100,7 +100,7 @@ export const Users = () => {
                         {usersJson.map((item , key) => 
                         (<Table.Row key={key} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                             <Table.Cell className="">
-                                <Avatar img={item?.personDto?.urlPhoto} alt="avatar of Jese" rounded bordered  size={"lg"}/>
+                                <Avatar img={item?.personDto?.urlPhoto} alt="avatar of Jese" rounded bordered  size={"lg"} />
                             </Table.Cell>
                             <Table.Cell>
                                 <div className=" overflow-hidden">
