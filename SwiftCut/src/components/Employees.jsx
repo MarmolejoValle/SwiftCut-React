@@ -34,8 +34,7 @@ export const Employees = ({ item , refresh }) => {
             <div className="border w-full m-1 p-4 rounded-lg " id={`employess-${item?.id}`} onDrop={e => {
                 let idTransfer = e.dataTransfer
                     .getData('text/plain').split("-")[1];
-                document.getElementById(e.dataTransfer
-                    .getData('text/plain')).remove();
+                
                 update({ id: idTransfer, idEmployee: item?.id })
 
                 console.log("Orden : " + idTransfer + "   Empleado : " + item?.id);

@@ -26,8 +26,9 @@ export const Inventory = () => {
                 method: 'GET',
                 data: ''
             });
+           
             setCategoryJson(response.data);
-
+            
         } catch (error) {
             // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
             console.error('Error fetching data:', error);
@@ -73,10 +74,8 @@ export const Inventory = () => {
     }
     return (
         <>
-            <div className="w-full m-2 p-4">
-
-                <div className="flex flex-col justify-start h-full w-full">
-                    <div className="flex items-center mb-4">
+            <div className="w-full  p-4">
+<div className="flex items-center mb-4">
 
 
                         <Label value="Categorias" className="text-3xl"/>
@@ -102,6 +101,8 @@ export const Inventory = () => {
                         }} />
                         
                     </div>
+                <div className="flex flex-col justify-start h-full w-full">
+                    
                     <div className="w-full h-3/6 flex items-start">
                         <div className=" flex overflow-x-scroll  h-full  w-11/12   items-center p-1 ">
                             {
