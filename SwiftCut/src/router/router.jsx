@@ -15,7 +15,6 @@ import { AxiosClientJSON } from "../config/http-client/axios-client"
 
 export const Routers = ()=>{
     
-const [user, setUser] = useState([]);
 useEffect(() => {
     const fetchData = async () => {
         try {
@@ -42,10 +41,10 @@ useEffect(() => {
 
     return(
         <>
-        <div className='flex'>
-          <ProfileHead user={user}/>
+        <div className='flex justify-around'>
+         
           <NavBar />
-          <div className='mt-5 w-full p-4 overflow-hidden'>
+          <div className='mt-9 w-11/12 p-4 flex  overflow-hidden rounded-md border'>
             <Routes>
               <Route  path="/Users" element={<Users />} />
               <Route  path="/Inventory" element={<Inventory />} />

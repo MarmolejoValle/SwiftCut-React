@@ -36,8 +36,11 @@ export const Extras = () =>{
     }, []);
     return(
         <>
-          <div className=" w-full p-5">
-                <div className="m-4 flex" >
+          <div className=" w-full p-5 ">
+
+                <div className="mb-4 flex" >
+                <Label value="Extras" className="text-3xl"/>
+
                 <FormElastic refresh={fetchData}  key={""} item={{
                         title: "Registro de extra",
                         data: [

@@ -7,7 +7,8 @@ import { FormElastic } from "../../components/FormElastic";
 
 export const ExtraInfo = () => {
     const [extraJson, setExtraJson] = useState({});
-    
+    const [productJson, setProductJson] = useState([]);
+
     const fetchData = async () => {
         try {
             const response = await AxiosClientJSON({
@@ -15,10 +16,18 @@ export const ExtraInfo = () => {
                 method: 'POST',
                 data: { id: idExtra }
             });
+            const responseProduct = await AxiosClientJSON({
+                url: '/api/product/readExtras',
+                method: 'POST',
+                data: { idExtras: idExtra }
+            });
+            
             
             
             
             setExtraJson(response.data);
+            setProductJson(responseProduct.data);
+
            
         } catch (error) {
             // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
@@ -36,7 +45,7 @@ export const ExtraInfo = () => {
     }, []);
     return (
         <>
-            <div className="mt-8 h-[80vh] w-full  p-4">
+            <div className="mt-8 w-full  p-4">
                 <div className="flex justify-center h-full w-full">
                 
                     <div className="flex  items-center w-3/4 m-5 p-3">
@@ -71,18 +80,19 @@ export const ExtraInfo = () => {
                         }
                     }} />
                         </div>
-                        <div className=" flex-[3] h-full m-5 flex flex-col border rounded-lg overflow-hidden">
+                        <div className=" flex-[3] h- m-5 flex flex-col border rounded-lg overflow-hidden">
                            
-                                <Label value="Productos Registrados" className="text-1xl text-center p-3 text-white " style={{backgroundColor:'var(--blackLigth)'}} />
-                            <div className="overflow-y-scroll">
-                                <PhotoInfo item={{urlPhoto:"https://editorialtelevisa.brightspotcdn.com/wp-content/uploads/2019/09/chuleta-cerdo-pimientos-balsamico.jpg",name:"Chuleta",description:"Chuleta es iuna parte sabrosota del ...."}}/>
-                                <PhotoInfo item={{urlPhoto:"https://editorialtelevisa.brightspotcdn.com/wp-content/uploads/2019/09/chuleta-cerdo-pimientos-balsamico.jpg",name:"Chuleta",description:"Chuleta es iuna parte sabrosota del ...."}}/>
-                                <PhotoInfo item={{urlPhoto:"https://editorialtelevisa.brightspotcdn.com/wp-content/uploads/2019/09/chuleta-cerdo-pimientos-balsamico.jpg",name:"Chuleta",description:"Chuleta es iuna parte sabrosota del ...."}}/>
-                                <PhotoInfo item={{urlPhoto:"https://editorialtelevisa.brightspotcdn.com/wp-content/uploads/2019/09/chuleta-cerdo-pimientos-balsamico.jpg",name:"Chuleta",description:"Chuleta es iuna parte sabrosota del ...."}}/>
-                                <PhotoInfo item={{urlPhoto:"https://editorialtelevisa.brightspotcdn.com/wp-content/uploads/2019/09/chuleta-cerdo-pimientos-balsamico.jpg",name:"Chuleta",description:"Chuleta es iuna parte sabrosota del ...."}}/>
-                                <PhotoInfo item={{urlPhoto:"https://editorialtelevisa.brightspotcdn.com/wp-content/uploads/2019/09/chuleta-cerdo-pimientos-balsamico.jpg",name:"Chuleta",description:"Chuleta es iuna parte sabrosota del ...."}}/>
-                                <PhotoInfo item={{urlPhoto:"https://editorialtelevisa.brightspotcdn.com/wp-content/uploads/2019/09/chuleta-cerdo-pimientos-balsamico.jpg",name:"Chuleta",description:"Chuleta es iuna parte sabrosota del ...."}}/>
+                                <Label value="Productos Registrados" className=" text-1xl text-center p-3 text-white " style={{backgroundColor:'var(--blackLigth)'}} />
+                            <div className="overflow-y-scroll h-96">
+                                {
+                                    productJson.map((item)=>{
+                                        return(<>
+                                                                        <PhotoInfo item={item}/>
 
+                                        </>);
+                                    })
+                                }
+                               
                             </div>
                         </div>
 

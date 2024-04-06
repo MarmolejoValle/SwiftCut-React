@@ -52,9 +52,10 @@ export const Users = () => {
 
     return (
         <>
-            <div className=" w-full p-5">
-                <div className="m-4 flex" >
-                <TextInput type="search" required />
+            <div className=" w-full p-4 ">
+
+                <div className="mb-4 flex" >
+                <Label value="Empleados" className="text-3xl"/>
 
                     <FormElastic refresh={fetchData} key={""} item={{
                         title: "Registro de Usuario",
@@ -84,7 +85,7 @@ export const Users = () => {
 
                 </div>
                 <Table hoverable >
-                    <Table.Head >
+                    <Table.Head  >
                         <Table.HeadCell>
                             <span className="sr-only">Photo</span>
                         </Table.HeadCell>
@@ -100,7 +101,7 @@ export const Users = () => {
                         {usersJson.map((item , key) => 
                         (<Table.Row key={key} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                             <Table.Cell className="">
-                                <Avatar img={item?.personDto?.urlPhoto} alt="avatar of Jese" rounded bordered  size={"lg"} />
+                                <Avatar img={item?.personDto?.urlPhoto} alt="avatar of Jese"  bordered  size={"lg"} />
                             </Table.Cell>
                             <Table.Cell>
                                 <div className=" overflow-hidden">
