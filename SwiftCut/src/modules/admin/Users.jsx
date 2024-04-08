@@ -60,9 +60,9 @@ export const Users = () => {
                     <FormElastic refresh={fetchData} key={""} item={{
                         title: "Registro de Usuario",
                         data: [
-                            {id:"name" , text: "Nombre" , type:"text" , placeholder:"Alberto"},
+                            {id:"name" , text: "Nombre(s)" , type:"text" , placeholder:"Alberto"},
                             {id:"lastName" , text: "Apellidos" , type:"text" , placeholder:"Cardenas Herrera"},
-                            {id:"phone" , text: "Telefono" , type:"tel" , placeholder:"2418342349"},
+                            {id:"phone" , text: "Teléfono" , type:"tel" , placeholder:"2418342349"},
                             {id:"image" , text: "Foto" , type:"file" },
                             {id:"sex" , text: "Sexo" , type:"text" , placeholder:"/"},
                             {id:"email" , text: "Correo" , type:"email" , placeholder:"ejemplo@correo.com"},
@@ -79,7 +79,7 @@ export const Users = () => {
                             axios:AxiosClientFormData,
                         }
                         , button:{
-                            name:"agregar"
+                            name:"Agregar"
                         }
                     }} />
 
@@ -90,7 +90,7 @@ export const Users = () => {
                             <span className="sr-only">Photo</span>
                         </Table.HeadCell>
                         <Table.HeadCell>Nombre</Table.HeadCell>
-                        <Table.HeadCell>Telefono</Table.HeadCell>
+                        <Table.HeadCell>Teléfono</Table.HeadCell>
                         <Table.HeadCell>Correo</Table.HeadCell>
                         <Table.HeadCell>Estado</Table.HeadCell>
                         <Table.HeadCell>

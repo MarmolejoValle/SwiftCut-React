@@ -85,7 +85,7 @@ export const Inventory = () => {
                             data: [
                                 { id: "name", text: "Nombre", type: "text", placeholder: "", value: "" },
                                 { id: "image", text: "Foto", type: "file" },
-                                { id: "description", text: "Descripcion", type: "textArea", placeholder: "", value: "" },
+                                { id: "description", text: "Descripción", type: "textArea", placeholder: "", value: "" },
 
 
                             ], select: [],

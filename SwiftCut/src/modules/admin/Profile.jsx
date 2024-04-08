@@ -72,13 +72,13 @@ export const Profile = () => {
                         </div>
                         <div>
                         <FormElastic refresh={fetchData} key={""} item={{
-                        title: "Modificar de Usuario",
+                        title: "Modificar",
                         data: [
                              
 
-                            {id:"name" , text: "Nombre" , type:"text" , placeholder:"Alberto" , value : userJson?.personDto?.name} ,
+                            {id:"name" , text: "Nombre(s)" , type:"text" , placeholder:"Alberto" , value : userJson?.personDto?.name} ,
                             {id:"lastName" , text: "Apellidos" , type:"text" , placeholder:"Cardenas Herrera" , value:userJson?.personDto?.lastName},
-                            {id:"phone" , text: "Telefono" , type:"tel" , placeholder:"2418342349", value:userJson?.personDto?.name},
+                            {id:"phone" , text: "Teléfono" , type:"tel" , placeholder:"2418342349", value:userJson?.personDto?.name},
                             {id:"image" , text: "Foto" , type:"file" , value:""},
                             {id:"sex" , text: "Sexo" , type:"text" , placeholder:"/", value:userJson?.personDto?.sex},
                             {id:"email" , text: "Correo" , type:"email" , placeholder:"ejemplo@correo.com", value:userJson?.email},
@@ -150,7 +150,7 @@ export const Profile = () => {
                                             <p className="text-[.9rem] ">{userJson?.personDto?.lastName}</p>
                                         </div>
                                         <div className=" w-full mt-2">
-                                            <p className="text-xs text-center text-gray-400 m-1 ">Telefono</p>
+                                            <p className="text-xs text-center text-gray-400 m-1 ">Teléfono</p>
                                             <p className="text-[.9rem] ">{userJson?.personDto?.phone}</p>
                                         </div>
                                         <div className=" w-full mt-2">

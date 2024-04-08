@@ -56,7 +56,7 @@ export const ProductList = ({ productJson, idCategory  ,refresh ,idC}) => {
                     data: [
                         { id: "name", text: "Nombre", type: "text", placeholder: "", value: "" },
                         { id: "image", text: "Foto", type: "file" },
-                        { id: "description", text: "Descripcion", type: "textArea", placeholder: "", value: "" },
+                        { id: "description", text: "Descripción", type: "textArea", placeholder: "", value: "" },
                         {id:"idCategory" , text: "" , type:"hidden" , placeholder:"" , value : idCategory}
 
 

@@ -65,7 +65,7 @@ const [idSession , setSession ] = useState(null)
             
                 <div className="flex flex-col mt-3" id="menu" >
                     <div onClick={changeSize}>
-                    <IconLabel Icon={IoIosMenu} value={"Menu"} id={"users"} boolean={labelVision.vision} />
+                    <IconLabel Icon={IoIosMenu} value={"Menú"} id={"users"} boolean={labelVision.vision} />
                     
                     </div>
                     <Link to={`/Users/Profile/${idSession}`} className="hover:border-l-4 duration-75 h-fit" >
@@ -75,14 +75,14 @@ const [idSession , setSession ] = useState(null)
                 
                 <div className="flex flex-col ">
                     <IconLabel Icon={FaUsers} value={"Usuarios"} id={"Usuarios"} boolean={labelVision.vision} urlRoute={"/Users"}/>
-                    <IconLabel Icon={RiBarChartGroupedLine} value={"Graficas"} id={"users"} boolean={labelVision.vision} urlRoute={"/Graphics"}/>
+                    <IconLabel Icon={RiBarChartGroupedLine} value={"Gráficas"} id={"users"} boolean={labelVision.vision} urlRoute={"/Graphics"}/>
                     <IconLabel Icon={HiTruck} value={"Pedidos"} id={"Pedidos"} boolean={labelVision.vision} urlRoute={"/Ordens"}/>
                     <IconLabel Icon={GiRiceCooker} value={"Extras"} id={"Extras"} boolean={labelVision.vision} urlRoute={"/Extras"}/>
                     <IconLabel Icon={GiHandTruck} value={"Inventario"} id={"users"} boolean={labelVision.vision} urlRoute={"/Inventory"}/>
                 </div>
                 <div className="flex flex-col mb-3" id="footer">
 
-                    <IconLabel Icon={CiLogout} value={"Usuarios"} id={"Salir"} boolean={labelVision.vision} urlRoute={"/"} funtion={singout} />
+                    <IconLabel Icon={CiLogout} value={"Cerrar Sesión"} id={"Salir"} boolean={labelVision.vision} urlRoute={"/"} funtion={singout} />
                     <div className="flex justify-center mt-4">
                         <img src={logoWhite} alt="" style={{ width: 100, height: 16 }} hidden={labelVision.vision} />
 
