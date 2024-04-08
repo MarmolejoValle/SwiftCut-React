@@ -25,7 +25,6 @@ useEffect(() => {
                 data: {email : sessionStorage.getItem('email')}
             });
             // Aquí puedes hacer algo con la respuesta, como establecer el estado del componente
-            setUser(info.data);
            
         } catch (error) {
             // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
@@ -44,7 +43,7 @@ useEffect(() => {
         <div className='flex justify-around'>
          
           <NavBar />
-          <div className='mt-9 w-11/12 p-4 flex  overflow-hidden rounded-md border'>
+          <div className='mt-9 w-11/12 p-4 flex  overflow-hidden rounded-md border bg-white mb-3'>
             <Routes>
               <Route  path="/Users" element={<Users />} />
               <Route  path="/Inventory" element={<Inventory />} />

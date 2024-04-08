@@ -16,6 +16,9 @@
     font-family: "DroidSnas";
    
 }
+body{
+    background-color: rgba(199, 199, 199, 0.133);
+}
 
 
 @tailwind base;
