@@ -10,13 +10,17 @@ import { IconLabel } from "../../components/IconLabel";
 import { useEffect, useState } from "react";
 import { ProfileHead } from "./ProfileHead";
 import { AxiosClientJSON } from "../../config/http-client/axios-client";
+import { Link } from "react-router-dom";
 
 
 
 
 export const NavBar = () => {
+const [idSession , setSession ] = useState(null) 
     useEffect(() => {
         const fetchData = async () => {
+            const id = sessionStorage.getItem('id');
+            setSession(id);
             try {
                 
                 const info = await AxiosClientJSON({
@@ -49,6 +53,8 @@ export const NavBar = () => {
     const singout =()=>{
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('email');
+        sessionStorage.removeItem('id');
+
 
 
     }
@@ -57,10 +63,14 @@ export const NavBar = () => {
             <div className={`${labelVision.wigth}  ml-4 mr-4 h-[90vh] mt-8 flex justify-center items-center`} >
             <nav id="barNav" style={{ backgroundColor: "var(--red-3)" }} className={`text-white ${labelVision.wigth} h-[90vh] fixed  flex flex-col justify-between  rounded-xl   duration-75`}>
             
-                <div className="flex flex-col mt-3" id="menu" onClick={changeSize}>
+                <div className="flex flex-col mt-3" id="menu" >
+                    <div onClick={changeSize}>
                     <IconLabel Icon={IoIosMenu} value={"Menu"} id={"users"} boolean={labelVision.vision} />
+                    
+                    </div>
+                    <Link to={`/Users/Profile/${idSession}`} className="hover:border-l-4 duration-75 h-fit" >
                     <ProfileHead user={user} boolean={labelVision.vision}/>
-
+                                </Link>
                 </div>
                 
                 <div className="flex flex-col ">

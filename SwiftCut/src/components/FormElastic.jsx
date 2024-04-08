@@ -108,7 +108,7 @@ export const FormElastic = ({ item, refresh, refreshExtra , hidden}) => {
             <Button onClick={() => { valuesInicia(item); setOpenModal(true); }} color="dark" size={'xs'} className={`ml-3 ${hidden}`} style={{ backgroundColor: 'var(--red-3)' }}>{item?.button?.name} </Button>
             <Modal show={openModal} size="4xl" popup onClose={() => setOpenModal(false)} className="duration-75" >
                 <form className="space-y-4 md:space-y-6 p-2 pt-3" onSubmit={formik.handleSubmit} id="forms" noValidate encType="multipart/form-data">
-                    <Modal.Header ><h3 className="text-2xl font-medium text-gray-900 dark:text-white">{item?.title}</h3></Modal.Header>
+                    <Modal.Header ><p className="text-2xl font-medium text-gray-900 dark:text-white">{item?.title}</p></Modal.Header>
                     <Modal.Body>
                         <div className="space-y-6">
 

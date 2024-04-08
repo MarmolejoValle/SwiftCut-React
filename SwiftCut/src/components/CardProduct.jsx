@@ -104,12 +104,12 @@ export const CardProduct = ({ item, extras, refresh, idProducto, refreshCategory
                     <Textarea id="comment" disabled={true} required rows={4} className="mb-3 text-center " value={item?.description} />
                     <div className="flex justify-evenly items-center">
                         <Label value="Cantidad" className="text-sm" />
-                        <Label value={`${item.quantity} Kg`} className="text-gray-500" />
+                        <Label value={`${item.quantity|| 0} Kg`} className="text-gray-500" />
                         <FormElastic refresh={refresh} refreshExtra={refreshCategory} key={""} item={{
                             title: "Recuerda que los kilos se sumaran ",
                             data: [
 
-                                { id: "quantity", text: "Cantidad para agregar", type: "num", placeholder: `la cantida agregada se sumara :  ${item.quantity}`, value: 0 },
+                                { id: "quantity", text: "Cantidad para agregar", type: "num", placeholder: `la cantida agregada se sumara :  ${item.quantity|| 0}`, value: 0 },
                                 { id: "id", text: "", type: "hidden", placeholder: "", value: item?.id },
 
 
@@ -176,7 +176,7 @@ export const CardProduct = ({ item, extras, refresh, idProducto, refreshCategory
                                             </div>
                                         </Table.Cell>
                                         <Table.Cell>
-                                            <Label value={`${item?.price} x Kg`} className="text-xs text-gray-500" />
+                                            <Label value={`${item?.price || 0} x Kg`} className="text-xs text-gray-500" />
                                         </Table.Cell>
                                         <Table.Cell>
                                             <Button color="red" onClick={()=>deleteProduct(item?.id)}>Eliminar</Button>

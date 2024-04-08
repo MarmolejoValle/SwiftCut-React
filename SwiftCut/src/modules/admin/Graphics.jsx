@@ -20,13 +20,11 @@ export const Graphics = () => {
         item.map((element) => {
             total += element.count;
         })
-        console.log(total)
         item.map((element) => {
             let promedio = (element.count *100 / total).toFixed(0);
             setCategoryJson((categorypre) => [...categorypre, { name: element.name, count: promedio }])
 
         })
-        console.log(categoryJson)
     }
 
     const fetchData = async () => {
@@ -118,8 +116,8 @@ export const Graphics = () => {
                             </div>
                         </div>
                         <div className="w-4/5 flex justify-center" >
-                            {categoryJson.map((item) => {
-                               return <BarPorcen item={{ category: item.name, progress: item.count }} />
+                            {categoryJson.map((item , key) => {
+                               return <BarPorcen  key={key} item={{ category: item.name, progress: item.count }} />
 
                             })}
 

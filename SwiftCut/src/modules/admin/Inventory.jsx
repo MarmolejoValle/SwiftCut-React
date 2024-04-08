@@ -74,8 +74,9 @@ export const Inventory = () => {
     }
     return (
         <>
-            <div className="w-full  p-4">
-<div className="flex items-center mb-4">
+            <div className="w-full m-2 p-4">
+                <div className="flex flex-col justify-start h-fit w-full">
+                    <div className="flex items-center mb-4">
 
 
                         <Label value="Categorias" className="text-3xl"/>
@@ -101,8 +102,6 @@ export const Inventory = () => {
                         }} />
                         
                     </div>
-                <div className="flex flex-col justify-start h-full w-full">
-                    
                     <div className="w-full h-3/6 flex items-start">
                         <div className=" flex overflow-x-scroll  h-full  w-11/12   items-center p-1 ">
                             {
@@ -114,7 +113,7 @@ export const Inventory = () => {
                                          setIdCategoryRefresh(item?.id); 
                                          activeItem(item?.id+"-cad"); }} >
 
-                                        <Category  item={item} refresh={fetchData}  />
+                                        <Category hidden={key} item={item} refresh={fetchData}  />
                                         
                                     </div>
                                 ))

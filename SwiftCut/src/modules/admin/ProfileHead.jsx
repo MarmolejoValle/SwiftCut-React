@@ -4,7 +4,7 @@ import Container from "postcss/lib/container";
 
 export const ProfileHead = ({ user, boolean }) => {
     return (<>
-        <div className='flex py-4 first:pt-0 last:pb-0  right-0 m-3 '   >
+        <div className='flex py-4 first:pt-0 last:pb-0  right-0 m-1 '   >
         <Avatar img={user?.personDto?.urlPhoto}alt="avatar of Jese" size={"xs"} rounded  className={boolean?"hidden":""}/>
            
                 <div className="ml-3 overflow-hidden flex flex-col">

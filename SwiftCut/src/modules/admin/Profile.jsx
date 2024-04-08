@@ -59,7 +59,7 @@ export const Profile = () => {
 
     return (
         <>
-            <div className=" h-fit m-auto ">
+            <div className=" h-fit w-full m-auto ">
                 <div className="m-2 flex flex-col h-full ">
                     <div className="flex-1 rounded-t-lg flex items-center justify-around p-6" style={{ backgroundColor: "var(--blackLigth)" }}>
                         <div className='flex py-4 first:pt-0 last:pb-0  items-center ml-16'>

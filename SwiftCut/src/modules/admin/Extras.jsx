@@ -78,11 +78,11 @@ export const Extras = () =>{
                         </Table.HeadCell>
                     </Table.Head>
                     <Table.Body>
-                       {extrasJson.map((item)=>( <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                       {extrasJson.map((item , key)=>( <Table.Row key={key} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                            
                             <Table.Cell>
-                                <div class=" overflow-hidden">
-                                    <p class="text-sm font-medium text-slate-900">{item?.name}</p>
+                                <div className=" overflow-hidden">
+                                    <p className="text-sm font-medium text-slate-900">{item?.name}</p>
                                 </div>
                             </Table.Cell>
                             <Table.Cell>{item?.price}</Table.Cell>

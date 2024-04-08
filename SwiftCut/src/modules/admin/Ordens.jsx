@@ -32,9 +32,9 @@ export const Ordens = () => {
             const response = await AxiosClientJSON({
                 url: '/api/order/readAllForEmployees',
                 method: 'POST',
-                data: {idEmployee : idEmploye}
+                data: { idEmployee: idEmploye }
             });
-          
+
             setOrdensForEmployeeJson(response.data);
 
 
@@ -50,9 +50,9 @@ export const Ordens = () => {
             const response = await AxiosClientJSON({
                 url: '/api/order/readAllForOrder',
                 method: 'POST',
-                data: {id : idOrder}
+                data: { id: idOrder }
             });
-          
+
             setProductList(response.data);
 
 
@@ -109,14 +109,14 @@ export const Ordens = () => {
     };
 
         */
-       
-      
-       
-   
+
+
+
+
 
     }, []);
 
-    
+
 
     const onError = (err) => {
         console.log(err);
@@ -132,19 +132,18 @@ export const Ordens = () => {
     return (
         <>
             <div className=" h-[80vh] w-full p-4">
-                <div>
-                <Label value="Pedidos" className="text-3xl"/>
-                    <HelpColor/>
-                    <HelpColor/>
-                    <HelpColor/>
+                <div className="flex justify-between">
+                    <Label value="Pedidos" className="text-3xl" />
+
+
                 </div>
 
-                <OrdersList modelMode={modalModel} set={setModalMode} ordens={ordensForEmployeeJson} refresh={fetchData}/>
-                <ProductList modelMode={modalProductMode} set={setModalProductMode} ordens={productListJson} refresh={fetchData}/>
+                <OrdersList modelMode={modalModel} set={setModalMode} ordens={ordensForEmployeeJson} refresh={fetchData} />
+                <ProductList modelMode={modalProductMode} set={setModalProductMode} ordens={productListJson} refresh={fetchData} />
 
                 <div className="flex justify-center h-full w-full">
                     <div className="flex-1  m-2 rounded-lg flex flex-col items-center " id="ordernsAll">
-                        <div className="w-full flex justify-center items-center border-b mb-4">
+                        <div className="w-full flex justify-center items-center border-b pb-9">
                             <Label value="Ordenes" className=" p-1 text-xl" />
                             {messages.map((element) => (
                                 "element"
@@ -160,8 +159,8 @@ export const Ordens = () => {
                             </div> :
                                 ordenesJson.map((item, key) => (
                                     <div key={key} className="h-fit  flex rounded-lg w-3/4 m-3 hover:scale-105  duration-75 " id={`orden-${item?.id}`}
-                                      onClick={()=>{setModalProductMode(true); ordensProductData(item?.id);} } 
-                                       draggable onDragStart={(e) => {
+                                        onClick={() => { setModalProductMode(true); ordensProductData(item?.id); }}
+                                        draggable onDragStart={(e) => {
                                             e.dataTransfer.setData('text/plain', e.target.id)
                                         }}
                                     >
@@ -175,13 +174,18 @@ export const Ordens = () => {
 
                     </div>
                     <div className="flex-1  m-2 rounded-lg flex flex-col items-center "  >
-                        <div className="w-3/4 flex justify-center items-center border-b mb-4">
+                        <div className="w-3/4 flex flex-col justify-center items-center border-b p-2">
                             <Label value="Trabajdores" className=" p-1 text-xl" />
+                            <div className="flex justify-center items-center ">
+                                <HelpColor color={"green"} text={"Disponible"} />
+                                <HelpColor color={"yellow"} text={"Lleno"} />
+                                <HelpColor color={"red"} text={"Saturado"} />
+                            </div>
                         </div>
                         <div className="overflow-y-scroll w-full flex flex-col items-center">
                             {
                                 employeesJson?.map((item, key) => (
-                                    <div key={key} className="h-fit  flex rounded-lg w-3/4 droppable " onClick={()=>{setModalMode(true) ; ordensEmployeData(item?.id)}} >
+                                    <div key={key} className="h-fit  flex rounded-lg w-3/4 droppable " onClick={() => { setModalMode(true); ordensEmployeData(item?.id) }} >
                                         <Employees refresh={fetchData} key={key} item={item} />
                                     </div>
 

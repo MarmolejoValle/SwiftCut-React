@@ -4,19 +4,7 @@ import { AxiosClientJSON } from "../config/http-client/axios-client";
 
 export const Employees = ({ item , refresh }) => {
     const [color, setColor] = useState('gray');
-    const colormode = (value) => {
-        if (value <= 2) {
-            return 'green';
-        }
-
-
-        if (value >= 6) {
-            return 'red';
-        }
-        if (value > 2 && value <= 5) {
-            return 'orange';
-        }
-    }
+    
     const update = async (data) => {
         const resposeOrdens = await AxiosClientJSON({
             url: '/api/order/updateEmployees',
@@ -46,11 +34,11 @@ export const Employees = ({ item , refresh }) => {
                     <p className="text-lg " style={{ color: "var(--blackLigth)" }}>{item?.personDto?.name + " " + item?.personDto?.lastName} </p>
                 </div>
                 <InfoLabel info={{ title: "Email", value: item?.email }} />
-                <InfoLabel info={{ title: "Pedidos en caja", value: item?.count }} />
+                <InfoLabel info={{ title: "Pedidos en caja", value: item?.count|| 0 }} />
 
-                {item?.count <= 2 ? <div className={`bg-green-500  h-1/6 rounded-sm`}></div> : null}
-                {item?.count > 2 && item?.count <= 6 ? <div className={`bg-orange-500  h-1/6 rounded-sm`}></div> : null}
-                {item?.count > 6 ? <div className={`bg-red-500  h-1/6 rounded-sm`}></div> : null}
+                {(item?.count|| 0 ) <= 2 ? <div className={`bg-green-400  h-1/6 rounded-sm`}></div> : null}
+                {(item?.count || 0) > 2 && (item?.count || 0) <= 6 ? <div className={`bg-yellow-400  h-1/6 rounded-sm`}></div> : null}
+                {(item?.count || 0 )> 6 ? <div className={`bg-red-400  h-1/6 rounded-sm`}></div> : null}
 
 
             </div>
