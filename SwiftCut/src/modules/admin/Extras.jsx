@@ -48,7 +48,7 @@ export const Extras = () =>{
 
                             {id:"name" , text: "Nombre" , type:"text" , placeholder:"" , value : ""} ,
                             {id:"price" , text: "Precio" , type:"text" , placeholder:"" ,value : ""},
-                            {id:"description" , text: "Descripcion" , type:"text" , placeholder:"", value :""},
+                            {id:"description" , text: "Descripción" , type:"text" , placeholder:"", value :""},
                         
 
                         ],
@@ -72,7 +72,7 @@ export const Extras = () =>{
                         
                         <Table.HeadCell>Nombre</Table.HeadCell>
                         <Table.HeadCell>Precio</Table.HeadCell>
-                        <Table.HeadCell>Descripcion</Table.HeadCell>
+                        <Table.HeadCell>Descripción</Table.HeadCell>
                         <Table.HeadCell>
                             <span className="sr-only">Edit</span>
                         </Table.HeadCell>

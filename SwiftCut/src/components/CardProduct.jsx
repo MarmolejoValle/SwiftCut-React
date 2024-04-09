@@ -72,7 +72,7 @@ export const CardProduct = ({ item, extras, refresh, idProducto, refreshCategory
                         data: [
                             { id: "name", text: "Nombre", type: "text", placeholder: "", value: item?.name },
                             { id: "image", text: "Foto", type: "file" },
-                            { id: "description", text: "Descripcion", type: "textArea", placeholder: "", value: item?.description },
+                            { id: "description", text: "Descripción", type: "textArea", placeholder: "", value: item?.description },
                             { id: "id", text: "", type: "hidden", placeholder: "", value: item?.id }
 
 
@@ -106,7 +106,7 @@ export const CardProduct = ({ item, extras, refresh, idProducto, refreshCategory
                         <Label value="Cantidad" className="text-sm" />
                         <Label value={`${item.quantity|| 0} Kg`} className="text-gray-500" />
                         <FormElastic refresh={refresh} refreshExtra={refreshCategory} key={""} item={{
-                            title: "Recuerda que los kilos se sumaran ",
+                            title: "Recuerda que los kilos se sumarán ",
                             data: [
 
                                 { id: "quantity", text: "Cantidad para agregar", type: "num", placeholder: `la cantida agregada se sumara :  ${item.quantity|| 0}`, value: 0 },
@@ -125,7 +125,7 @@ export const CardProduct = ({ item, extras, refresh, idProducto, refreshCategory
                                 axios: AxiosClientJSON,
                             }
                             , button: {
-                                name: "editar"
+                                name: "Editar"
                             }
                             , refreshDate: idProducto
                             , refreshExtra: idCategory

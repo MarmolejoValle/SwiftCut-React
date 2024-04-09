@@ -11,11 +11,11 @@ export const Category = ({ item  , hidden , refresh}) => {
             
         </div>
         <FormElastic  refresh={refresh} hidden={"hidden"} key={""} item={{
-                            title: "Actualizar Categoria",
+                            title: "Actualizar Categoría",
                             data: [
                                 { id: "name", text: "Nombre", type: "text", placeholder: "", value:item?.name },
                                 { id: "image", text: "Foto", type: "file" },
-                                { id: "description", text: "Descripcion", type: "textArea", placeholder: "", value: item?.description },
+                                { id: "description", text: "Descripción", type: "textArea", placeholder: "", value: item?.description },
                                 { id: "id", text: "Foto", type: "hidden"  , value:item?.id},
 
 

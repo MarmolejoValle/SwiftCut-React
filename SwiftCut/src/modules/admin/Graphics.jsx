@@ -88,7 +88,7 @@ export const Graphics = () => {
     return (
         <>
             <div className="w-full p-4">
-            <Label value="Graficas" className="text-3xl"/>
+            <Label value="Gráficas" className="text-3xl"/>
 
                 <div className="flex justify-center h-full w-full">
                     <div className="flex-1 h-full flex flex-col justify-evenly items-center">

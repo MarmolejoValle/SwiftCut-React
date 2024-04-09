@@ -175,7 +175,7 @@ export const Ordens = () => {
                     </div>
                     <div className="flex-1  m-2 rounded-lg flex flex-col items-center "  >
                         <div className="w-3/4 flex flex-col justify-center items-center border-b p-2">
-                            <Label value="Trabajdores" className=" p-1 text-xl" />
+                            <Label value="Trabajadores" className=" p-1 text-xl" />
                             <div className="flex justify-center items-center ">
                                 <HelpColor color={"green"} text={"Disponible"} />
                                 <HelpColor color={"yellow"} text={"Lleno"} />

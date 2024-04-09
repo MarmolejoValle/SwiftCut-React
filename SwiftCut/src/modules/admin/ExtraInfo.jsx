@@ -58,7 +58,7 @@ export const ExtraInfo = () => {
                         title: "Modificar de Extra",
                         data: [
                             {id:"name" , text: "Nombre" , type:"text" , placeholder:"Alberto" , value : extraJson?.name} ,
-                            {id:"description" , text: "Descripcion" , type:"textArea" , placeholder:"Cardenas Herrera" , value:extraJson?.description},
+                            {id:"description" , text: "Descripción" , type:"textArea" , placeholder:"Cardenas Herrera" , value:extraJson?.description},
                             {id:"price" , text: "Precio" , type:"tel" , placeholder:"", value:extraJson?.price},
                             {id:"id" , text: "" , type:"hidden" , placeholder:"" , value : extraJson?.id}
 

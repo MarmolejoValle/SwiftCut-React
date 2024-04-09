@@ -116,7 +116,7 @@ export const SingInPage = () => {
                                     >{formik.isSubmitting ? (<Spinner />) :
                                         (<>
 
-                                            Iniciar Sesion
+                                            Iniciar Sesión
                                         </>)} </Button>
                                 </form>
                             </div>
