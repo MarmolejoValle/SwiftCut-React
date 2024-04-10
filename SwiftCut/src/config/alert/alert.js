@@ -12,3 +12,23 @@ export const customAlert = (title, text, icon) => {
         confirmButtonText:'Aceptar'
     })
 }
+
+export const customAlertCorfirm = (title, timer, icon) => {
+    return SweetAlert.fire({
+        title,
+        timer,
+        icon,
+       
+    })
+}
+export const customToast = (text , type) => {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        timer: 1500,
+        timerProgressBar: true,
+                
+      })
+    return Toast.fire(text, '', type) 
+
+}

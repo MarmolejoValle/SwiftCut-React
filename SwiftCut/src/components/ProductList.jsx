@@ -96,8 +96,8 @@ export const ProductList = ({ productJson, idCategory  ,refresh ,idC}) => {
                                     <div className="bg-cover h-14 w-14" style={{ backgroundImage: `url('${item?.urlPhoto} ')` }}></div>
                                 </Table.Cell>
                                 <Table.Cell>
-                                    <div class=" overflow-hidden">
-                                        <p class="text-sm font-medium text-slate-900">{item?.name}</p>
+                                    <div className=" overflow-hidden">
+                                        <p className="text-sm font-medium text-slate-900">{item?.name}</p>
                                     </div>
                                 </Table.Cell>
                                 <Table.Cell>{item?.quantity}Kg</Table.Cell>

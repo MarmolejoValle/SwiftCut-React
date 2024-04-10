@@ -12,6 +12,7 @@ import { ProfileHead } from "../modules/admin/ProfileHead"
 import { NavBar } from "../modules/admin/NavBar"
 import { useEffect, useState } from "react"
 import { AxiosClientJSON } from "../config/http-client/axios-client"
+import { NotFound } from "../modules/NotFound"
 
 export const Routers = ()=>{
     
@@ -52,6 +53,8 @@ useEffect(() => {
               <Route  path="/Extras" element={<Extras />} />
               <Route  path="/Extras/Info/:idExtra" element={<ExtraInfo />} />
               <Route  path="/Ordens" element={<Ordens />} />
+              <Route path="*" element={<NotFound/>} />
+
             </Routes>
           </div>
   
