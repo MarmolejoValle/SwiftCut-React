@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useReducer, useState } from "react";
 import { AxiosClientFormData, AxiosClientJSON } from "../config/http-client/axios-client";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { customAlert } from "../config/alert/alert";
+import { customAlert, customAlertCorfirm } from "../config/alert/alert";
 import * as yup from 'yup';
 import AuthContext from "../config/context/auth-context";
 
@@ -36,6 +36,11 @@ export const FormElastic = ({ item, refresh, refreshExtra , hidden}) => {
 
 
                     setOpenModal(false)
+                    customAlert(
+                        'Registro Correcto',
+                        '',
+                        'success'
+                    );
                 }
                 else {
                     throw  Error("Error");

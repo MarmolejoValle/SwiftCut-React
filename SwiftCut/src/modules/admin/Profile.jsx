@@ -121,7 +121,7 @@ export const Profile = () => {
 
                                     <div className="h-4/5 flex justify-center items-center">
                                         <div style={{ borderColor: 'var(--red-3)' }} className="flex flex-col justify-center items-center w-20 h-20 rounded-full  m-5 p-3 border">
-                                            <Label className="text-2xl font-bold">{ordensCount?.count}</Label>
+                                            <Label className="text-2xl font-bold">{ordensCount?.count || 0}</Label>
                                             <Label className="text-sm text-gray-500">Total</Label>
                                         </div>
                                     </div>
@@ -148,6 +148,10 @@ export const Profile = () => {
                                         <div className=" w-full mt-2">
                                             <p className="text-xs text-center text-gray-400 m-1 ">Apellidos</p>
                                             <p className="text-[.9rem] ">{userJson?.personDto?.lastName}</p>
+                                        </div>
+                                        <div className=" w-full mt-2">
+                                            <p className="text-xs text-center text-gray-400 m-1 ">Correo</p>
+                                            <p className="text-[.9rem] ">{userJson?.email}</p>
                                         </div>
                                         <div className=" w-full mt-2">
                                             <p className="text-xs text-center text-gray-400 m-1 ">Teléfono</p>

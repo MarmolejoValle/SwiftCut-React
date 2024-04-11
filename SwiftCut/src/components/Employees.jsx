@@ -1,20 +1,30 @@
 import { useEffect, useState } from "react";
 import { InfoLabel } from "./InfoLabel";
 import { AxiosClientJSON } from "../config/http-client/axios-client";
+import { customAlertCorfirm, customToast } from "../config/alert/alert";
 
 export const Employees = ({ item , refresh }) => {
     const [color, setColor] = useState('gray');
     
     const update = async (data) => {
-        const resposeOrdens = await AxiosClientJSON({
-            url: '/api/order/updateEmployees',
-            method: 'PUT',
-            data: data
-        });
-        if(resposeOrdens.status ==  'OK')
-        {
-            refresh();
+        try {
+            const resposeOrdens = await AxiosClientJSON({
+                url: '/api/order/updateEmployees',
+                method: 'PUT',
+                data: data
+            });
+            if(resposeOrdens.status ==  'OK')
+            {
+                customToast("Orden asignada" , 'success');
+
+                refresh();
+                
+            }
+        } catch (error) {
+            console.log(error)
+               
         }
+        
     }
 
     return (
