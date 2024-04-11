@@ -3,7 +3,7 @@ import axios from "axios";
 //const SERVER_URL = "http://192.168.100.52:8080"
 
 //const SERVER_URL = "http://192.168.0.9:8080"
-const SERVER_URL = "http://localhost:8080"
+const SERVER_URL = "http://aws-entorno-env.eba-p4kmug8c.us-east-1.elasticbeanstalk.com"
 //const SERVER_URL = "http://192.168.137.77:8080"
 
 
